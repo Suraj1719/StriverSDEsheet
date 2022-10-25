@@ -1,0 +1,57 @@
+leetcode-287
+find the duplicate number
+Here i solve all the approach. try to learn and code .
+
+import java.util.*;
+
+public class q287FindDuplicates {
+
+	public static void main(String[] args) {
+		int nums[]=new int[] {2,5,9,6,9,3,8,9,7,1};
+		int duplicateNumber=approach1Sorting(nums);
+		System.out.println(duplicateNumber);
+		System.out.println(duplicatenumberSet(nums));
+		System.out.println(duplicatenumberLLCycle(nums));
+
+	}
+
+	private static int duplicatenumberLLCycle(int[] nums) {
+		// most optimal solution
+		//time=O(n)
+		//space=O(1)
+		int slow=nums[0];int fast=nums[0];
+		do {
+			slow=nums[slow];
+			fast=nums[nums[fast]];
+		}while(slow!=fast);
+		fast=nums[0];
+		while(fast!=slow) {
+			slow=nums[slow];
+			fast=nums[fast];
+		}
+		return fast;
+	}
+
+	private static int duplicatenumberSet(int[] nums) {
+		Set<Integer> set=new HashSet<>();
+		for(int i=0;i<nums.length;i++) {
+			if(set.contains(nums[i]))
+				return nums[i];
+			else
+				set.add(nums[i]);
+		}
+		return -1;
+	}
+
+	private static int approach1Sorting(int[] nums) {
+		Arrays.sort(nums);
+		//time complexity=o(n logn)
+		//space=o(n)
+		for(int i=0;i<nums.length-1;i++) {
+			if(nums[i]==nums[i+1])
+				return nums[i];
+		}
+		return 0;
+	}
+
+}
