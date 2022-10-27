@@ -1,0 +1,73 @@
+GFG : In given array find number of pair such that i<j and arr[i]>arr[j]
+
+//java solution
+
+public class gfgCountInversion {
+
+	public static void main(String[] args) {
+		int a[]=new int[] {8,4,2,1};
+		int ans1=countInversion1(a);
+		System.out.println(ans1);
+		//optimal approach using merge sort technique
+		int ans=countInversionOpt(a);
+		System.out.println(ans);
+	}
+
+	private static int countInversionOpt(int[] a) {
+		int ans=0;
+		int n=a.length;
+		int temp[]=new int[n];
+		ans=mergeSort(a,temp,0,n-1);
+		return ans;
+	}
+
+	private static int mergeSort(int[] a, int[] temp, int left, int right) {
+		int mid,inv_count=0;
+		if(right>left) {
+			mid=(right+left)/2;
+			inv_count+=mergeSort(a,temp,left,mid);
+			inv_count+=mergeSort(a,temp,mid+1,right);
+			
+			inv_count+=merge(a,temp,left,mid+1,right);
+		}
+		return inv_count;
+	}
+
+	private static int merge(int[] a, int[] temp, int left, int mid, int right) {
+		int i,j,k;
+		int cur_count=0;
+		i=left;j=mid;k=left;
+		while(i<=mid-1 && j<=right) {
+			if(a[i]<=a[j])
+				temp[k++]=a[i++];
+			else
+				temp[k++]=a[j++];
+			
+			cur_count+=(mid-i);
+		}
+		while(i<=mid-1) {
+			temp[k++]=a[i++];
+		}
+		while(j<=right) {
+			temp[k++]=a[j++];
+		}
+		for(i=left;i<=right;i++) {
+			a[i]=temp[i];//we restore the given array as it changed 
+			//during sorting process
+		}
+		return cur_count;
+	}
+
+	private static int countInversion1(int[] a) {
+		//bruteforce approach -O(N^2)
+		int count=0;
+		for(int i=0;i<a.length-1;i++) {
+			for(int j=i+1;j<a.length;j++) {
+				if(a[i]>a[j])
+					count++;
+			}
+		}
+		return count;
+	}
+
+}
