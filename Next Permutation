@@ -1,0 +1,56 @@
+leetcode : 31
+find the least next permutation of given number
+
+//java solution
+//it is the optimal solution . you do first brute farce method that find all permutation and sort all and take the next element of given number
+public class q31NextPermutation {
+
+	public static void main(String[] args) {
+		int nums[]=new int[] {3,2,5,4,1};
+		nextPermutation(nums);
+		for(int i=0;i<nums.length;i++)
+		{
+			System.out.print(nums[i]+"");
+		}
+	}
+	public static void nextPermutation(int[] nums) {
+        int ind=-1;
+        for(int i=nums.length-2;i>=0;i--){
+            if(nums[i]<nums[i+1]){
+                ind=i;
+                break;
+            }
+        }
+        if(ind==-1){
+                    reverse(nums, 0);
+            return;
+
+        }
+        for(int i=nums.length-1;i>ind;i--){
+            if(nums[i]>nums[ind]){
+                int temp=nums[i];
+                nums[i]=nums[ind];
+                nums[ind]=temp;
+                break;
+            }
+        }
+        
+        reverse(nums, ind + 1);
+        
+    }
+     private static void reverse(int[] nums, int start) {
+        int i = start, j = nums.length - 1;
+        while (i < j) {
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    private static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+}
