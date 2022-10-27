@@ -1,0 +1,57 @@
+leetcode : 74 
+Search a 2D Matrix
+Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
+
+Integers in each row are sorted from left to right.
+The first integer of each row is greater than the last integer of the previous row.
+
+//solution in java
+public class q74SearchIn2dmatrix {
+
+	public static void main(String[] args) {
+		int matrix[][]= {{1,3,5,7},{10,11,16,20},{23,30,34,60}};
+		int target=16;
+		boolean res=searchMatrix(matrix,target);
+		System.out.println(res);
+		System.out.println(searchMatrixBruteForce(matrix,target));
+
+	}
+  
+  
+	private static boolean searchMatrixBruteForce(int[][] matrix, int target) {
+		// time complexity = O(n*m)
+		for(int i=0;i<matrix.length;i++) {
+			for(int j=0;j<matrix[0].length;j++) {
+				if(matrix[i][j]==target)
+					return true;
+			}
+		}
+		return false;
+	}
+  
+  
+	public static boolean searchMatrix(int[][] matrix, int target) {
+		//optimal solution
+		//time complexity = O(log(n*m)) as we use binary search over matrix
+		//space is O(1)
+        if(matrix.length==0)
+            return false;
+        
+        int n=matrix.length;
+        int m=matrix[0].length;
+        int lo=0;
+        int hi=(n*m)-1;
+        while(lo<=hi){
+            int mid=(lo+(hi-lo)/2);
+            if(matrix[mid/m][mid%m]==target)
+                return true;
+            
+            if(matrix[mid/m][mid%m]<target)
+                lo=mid+1;
+            else
+                hi=mid-1;
+        }
+        return false;
+    }
+
+}
