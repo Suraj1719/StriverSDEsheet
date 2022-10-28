@@ -1,0 +1,43 @@
+Given an array nums of size n, return the majority element.
+The majority element is the element that appears more than ⌊n / 2⌋ times .
+
+//by using map :- time complexity :O(nlogn) , space complexity:O(n)
+public int majorityElement(int[] nums) {
+        int n=nums.length;
+		Map<Integer,Integer> m=new HashMap<>();
+		for(int i=0;i<n;i++) {
+			int count=0;
+			
+			
+			for(int j=i+1;j<n;j++) {
+				if(nums[i]==nums[j])
+					count++;
+			}
+			if(count>=(n/2)) {
+				return nums[i];
+			}
+			else 
+				continue;
+			}
+		
+        return 0;
+    }
+    
+    //approach-2 (can store in freq array) time complexity :O(n)
+    
+    //moost voting algorithm :optimal approach (time : O(n) and space :O(1))
+    
+    public int majority(int []a){
+           int count=0;
+           int candidates=0;
+           for(int num:a){
+           if(count==0)
+              candidate=a[i];
+           if(num==candidate)
+           count++;
+           else
+           count--;
+           }
+        return candidate:
+        
+      }
